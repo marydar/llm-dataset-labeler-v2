@@ -1,7 +1,7 @@
 import json
 import re
-
 from src.llm import ask_llm
+from config import KEEP_NOT_RELATED, NOT_RELATED_LABEL
 
 
 def create_prompt(
@@ -27,36 +27,43 @@ def create_prompt(
 
     prompt = f"""
 
-You are a text classification model.
+You are a strict text classification system.
 
-Classify each user prompt into exactly ONE category.
+Your task:
+Assign each user prompt to exactly ONE category from the provided categories.
 
-Available categories:
+The label field must be copied exactly from the category names.
+Do not shorten, modify, or rewrite category names.
 
-{label_text}
+Important:
+- Use ONLY the provided labels.
+- Do not create new labels.
+- If the text does not clearly match any category, use "Not Related".
+- Do not force a category.
+- Prefer "Not Related" over a weak guess.
 
+Categories:
 
-Rules:
-
-- Choose the closest category.
-- Do not invent labels.
-- Return JSON only.
-- Keep order.
-
+{labels}
 
 Texts:
 
-{examples}
+{texts}
 
-
-Output format:
+Return JSON only:
 
 [
- {{
- "text_id":1,
- "label":"category"
- }}
+{{
+"text_id":1,
+"label":"category name"
+}}
 ]
+
+Return ONLY valid JSON.
+
+Do NOT wrap the JSON in ```json or ```.
+
+Do NOT include any explanation before or after the JSON.
 
 """
 
@@ -79,16 +86,132 @@ def classify_batch(
 
     result = ask_llm(prompt)
 
-
-    return parse_response(
+    
+    results = parse_response(
         result,
         texts
     )
 
 
+    results = validate_labels(
+        results,
+        labels.keys()
+    )
+    return results
 
 
-def parse_response(
+
+def validate_labels(results, allowed_labels):
+
+    fixed = []
+
+    for item in results:
+
+        if item["label"] not in allowed_labels:
+            item["label"] = "Not Related"
+
+        fixed.append(item)
+
+    return fixed
+import json
+
+
+
+def parse_response(response, texts):
+
+    try:
+
+        # Remove markdown code fences if present
+        response = response.strip()
+
+        if response.startswith("```json"):
+            response = response[len("```json"):]
+
+        elif response.startswith("```"):
+            response = response[len("```"):]
+
+        if response.endswith("```"):
+            response = response[:-3]
+
+        response = response.strip()
+
+        data = json.loads(response)
+
+        output = []
+
+        for item in data:
+
+            idx = item["text_id"] - 1
+
+            if not (0 <= idx < len(texts)):
+                continue
+
+            label = item["label"]
+
+            # Skip unrelated prompts
+            if label == "Not Related":
+                continue
+
+            output.append(
+                {
+                    "text": texts[idx],
+                    "label": label
+                }
+            )
+
+        return output
+
+    except Exception as e:
+
+        print("Failed parsing JSON")
+        print(e)
+        print(response)
+
+        return []
+    
+def wparse_response(
+        response,
+        texts
+):
+
+    try:
+
+        data = json.loads(response)
+
+        output = []
+
+        for item in data:
+
+            idx = item["text_id"] - 1
+
+            if not (0 <= idx < len(texts)):
+                continue
+
+            label = item["label"]
+
+            # Skip unrelated prompts
+            if label == "Not Related":
+                continue
+
+            output.append(
+                {
+                    "text": texts[idx],
+                    "label": label
+                }
+            )
+
+        return output
+
+
+    except Exception as e:
+
+        print("Failed parsing JSON")
+        print(e)
+        print(response)
+
+        return []
+    
+def eparse_response(
         response,
         texts
 ):

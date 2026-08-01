@@ -11,65 +11,64 @@ from src.utils import (
 
 from src.exporter import save_dataset
 
-
 from config import *
 
 
-
 def main():
-
 
     labels = load_json(
         "labels.json"
     )
 
-
+    print("start")
     texts = load_text_dataset(
-        "YOUR_DATASET_NAME",
-        text_column="text"
+        "lmsys/lmsys-chat-1m",
+        conversation_column="conversation"
+    )
+    print("end")
+    print(len(texts))
+    # return
+
+#     texts = [
+#     "How can I protect my website from SQL injection attacks?",
+#     "How do I train a neural network using PyTorch?",
+#     "What are the symptoms of diabetes?",
+#     "How do I open a bank account?",
+#     "Best exercises for building muscle?"
+# ]
+
+
+    # ==========================
+    # TEST MODE
+    # Only one batch
+    # ==========================
+
+    texts = texts[:BATCH_SIZE]
+
+
+    print(
+        f"Testing with {len(texts)} texts"
     )
 
 
-    results=[]
+    results = []
 
 
-
-    for i in tqdm(
-        range(
-            0,
-            len(texts),
-            BATCH_SIZE
-        )
-    ):
+    labeled = classify_batch(
+        texts,
+        labels
+    )
 
 
-        batch=texts[
-            i:i+BATCH_SIZE
-        ]
+    results.extend(
+        labeled
+    )
 
 
-        labeled = classify_batch(
-            batch,
-            labels
-        )
-
-
-        results.extend(
-            labeled
-        )
-
-
-        save_json(
-            results,
-            CHECKPOINT_PATH
-        )
-
-
-        random_delay(
-            REQUEST_DELAY_MIN,
-            REQUEST_DELAY_MAX
-        )
-
+    save_json(
+        results,
+        CHECKPOINT_PATH
+    )
 
 
     save_dataset(
@@ -84,6 +83,5 @@ def main():
     )
 
 
-
-if __name__=="__main__":
+if __name__ == "__main__":
     main()

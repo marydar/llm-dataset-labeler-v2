@@ -17,7 +17,7 @@ MODEL = "google/gemini-2.5-flash"
 
 
 # Generation
-BATCH_SIZE = 30
+BATCH_SIZE = 10
 
 MAX_TOKENS = 1500
 
@@ -27,7 +27,8 @@ TEMPERATURE = 0.2
 # Safety
 REQUEST_DELAY_MIN = 4
 REQUEST_DELAY_MAX = 8
-
+KEEP_NOT_RELATED = False
+NOT_RELATED_LABEL = "Not Related"
 
 # Output
 CHECKPOINT_PATH = "output/checkpoint.json"

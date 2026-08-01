@@ -69,5 +69,7 @@
 
   "Literature": "Books, novels, writing, poetry, authors, literary criticism, storytelling, publishing, and literary analysis.",
 
-  "Painting": "Painting, drawing, illustration, traditional and digital art, visual art techniques, art history, color theory, and artistic composition."
+  "Painting": "Painting, drawing, illustration, traditional and digital art, visual art techniques, art history, color theory, and artistic composition.",
+
+  "Not Related":"Texts that do not belong to any provided category. General questions, casual conversation, jokes, unrelated topics, or topics outside the taxonomy."
 }

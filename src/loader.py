@@ -1,28 +1,61 @@
 from datasets import load_dataset
+from tqdm import tqdm
 
 
 def load_text_dataset(
         dataset_name,
         split="train",
-        text_column="text"
+        conversation_column="conversation"
 ):
+    
+    print("Loading dataset")
 
     dataset = load_dataset(
         dataset_name,
         split=split
     )
 
+    print("Loaded dataset")
+    print(f"Total samples: {len(dataset)}")
+
 
     texts = []
 
 
-    for item in dataset:
+    for item in tqdm(
+        dataset,
+        desc="Extracting user prompts",
+        total=len(dataset)
+    ):
 
-        text = item.get(text_column)
+        conversation = item.get(
+            conversation_column
+        )
 
 
-        if text and len(text.strip()) > 5:
-            texts.append(text.strip())
+        if not conversation:
+            continue
+
+
+        # Find user message
+        for message in conversation:
+
+            if message.get("role") == "user":
+
+                text = message.get(
+                    "content"
+                )
+
+                if text and len(text.strip()) > 5:
+                    texts.append(
+                        text.strip()
+                    )
+
+                break
+
+
+    print("Loaded texts")
+    print(f"Number of user prompts: {len(texts)}")
 
 
     return texts
