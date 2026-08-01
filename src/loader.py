@@ -5,7 +5,8 @@ from tqdm import tqdm
 def load_text_dataset(
         dataset_name,
         split="train",
-        conversation_column="conversation"
+        conversation_column="conversation",
+        language_column="language"
 ):
     
     print("Loading dataset")
@@ -24,9 +25,16 @@ def load_text_dataset(
 
     for item in tqdm(
         dataset,
-        desc="Extracting user prompts",
+        desc="Extracting English user prompts",
         total=len(dataset)
     ):
+
+        # Keep only English
+        language = item.get(language_column)
+
+        if language != "English":
+            continue
+
 
         conversation = item.get(
             conversation_column
@@ -37,7 +45,7 @@ def load_text_dataset(
             continue
 
 
-        # Find user message
+        # Extract user message
         for message in conversation:
 
             if message.get("role") == "user":
@@ -54,8 +62,8 @@ def load_text_dataset(
                 break
 
 
-    print("Loaded texts")
-    print(f"Number of user prompts: {len(texts)}")
+    print("Loaded English texts")
+    print(f"Number of prompts: {len(texts)}")
 
 
     return texts

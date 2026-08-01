@@ -21,9 +21,14 @@ def main():
     )
 
     print("start")
+    # texts = load_text_dataset(
+    #     "lmsys/lmsys-chat-1m",
+    #     conversation_column="conversation"
+    # )
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
-        conversation_column="conversation"
+        conversation_column="conversation",
+        language_column="language"
     )
     print("end")
     print(len(texts))
@@ -64,7 +69,14 @@ def main():
         labeled
     )
 
+    MIN_CONFIDENCE = 0.8
 
+
+    results = [
+        x for x in results
+        if x["confidence"] >= MIN_CONFIDENCE
+    ]
+    
     save_json(
         results,
         CHECKPOINT_PATH

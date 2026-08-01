@@ -51,13 +51,23 @@ Texts:
 {texts}
 
 Return JSON only:
+Output format:
 
 [
 {{
 "text_id":1,
-"label":"category name"
+"label":"category",
+"confidence":0.95
 }}
 ]
+
+Confidence rules:
+- 1.0 = completely certain
+- 0.8-0.9 = very likely correct
+- 0.5-0.7 = uncertain
+- below 0.5 = weak match
+
+Be conservative. If no category clearly matches, use "Not Related" with low confidence.
 
 Return ONLY valid JSON.
 
@@ -155,7 +165,11 @@ def parse_response(response, texts):
             output.append(
                 {
                     "text": texts[idx],
-                    "label": label
+                    "label": item["label"],
+                    "confidence": item.get(
+                        "confidence",
+                        0
+                    )
                 }
             )
 
