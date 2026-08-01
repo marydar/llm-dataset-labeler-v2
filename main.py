@@ -10,8 +10,10 @@ from src.utils import (
 )
 
 from src.exporter import save_dataset
+from src.exporter import push_to_hub
 
 from config import *
+
 
 
 def main():
@@ -20,63 +22,96 @@ def main():
         "labels.json"
     )
 
-    print("start")
-    # texts = load_text_dataset(
-    #     "lmsys/lmsys-chat-1m",
-    #     conversation_column="conversation"
-    # )
+
+    print("Loading dataset...")
+
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
         conversation_column="conversation",
-        language_column="language"
+        language_column="language",
+        max_samples=100
     )
-    print("end")
-    print(len(texts))
-    # return
-
-#     texts = [
-#     "How can I protect my website from SQL injection attacks?",
-#     "How do I train a neural network using PyTorch?",
-#     "What are the symptoms of diabetes?",
-#     "How do I open a bank account?",
-#     "Best exercises for building muscle?"
-# ]
-
-
-    # ==========================
-    # TEST MODE
-    # Only one batch
-    # ==========================
-
-    texts = texts[:BATCH_SIZE]
 
 
     print(
-        f"Testing with {len(texts)} texts"
+        f"Loaded {len(texts)} texts"
     )
 
 
     results = []
 
 
-    labeled = classify_batch(
-        texts,
-        labels
+    # Process batches
+    for i in tqdm(
+        range(
+            0,
+            len(texts),
+            BATCH_SIZE
+        ),
+        desc="Classifying batches"
+    ):
+
+
+        batch = texts[
+            i:i+BATCH_SIZE
+        ]
+
+
+        labeled = classify_batch(
+            batch,
+            labels
+        )
+
+
+        results.extend(
+            labeled
+        )
+
+
+        # Save checkpoint after every batch
+        save_json(
+            results,
+            CHECKPOINT_PATH
+        )
+
+
+        # Avoid hitting OpenRouter limits
+        random_delay(
+            REQUEST_DELAY_MIN,
+            REQUEST_DELAY_MAX
+        )
+
+
+    print(
+        f"Before filtering: {len(results)}"
     )
 
 
-    results.extend(
-        labeled
-    )
-
+    # Remove low confidence
     MIN_CONFIDENCE = 0.8
 
 
     results = [
         x for x in results
-        if x["confidence"] >= MIN_CONFIDENCE
+        if x.get(
+            "confidence",
+            0
+        ) >= MIN_CONFIDENCE
     ]
-    
+
+
+    # Remove Not Related
+    results = [
+        x for x in results
+        if x["label"] != "Not Related"
+    ]
+
+
+    print(
+        f"After filtering: {len(results)}"
+    )
+
+
     save_json(
         results,
         CHECKPOINT_PATH
@@ -93,6 +128,12 @@ def main():
         "Finished:",
         len(results)
     )
+    
+    push_to_hub(
+        results,
+        "maryamdar/llm-chats-labeled"
+    )
+
 
 
 if __name__ == "__main__":

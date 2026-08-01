@@ -5,7 +5,7 @@ dataset = load_from_disk("output/labeled_dataset")
 
 df = dataset.to_pandas()
 
-print(df.head(10))
+print(df)
 
 # import datasets
 
