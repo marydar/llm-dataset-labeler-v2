@@ -1,0 +1,73 @@
+{
+  "Desktop & Mobile & Web Development": "Building applications and websites for browsers, desktop, and mobile devices. Includes UI/UX, frontend and backend development, frameworks, coding help, app development, and general software development questions.",
+  
+  "Cybersecurity": "Security topics including authentication, encryption, malware, exploits, vulnerabilities, penetration testing, security practices, and protecting systems, networks, and applications.",
+  
+  "AI / Machine Learning / Data Science": "Building and training machine learning models, artificial intelligence, NLP, computer vision, large language models, data analysis, data pipelines, model deployment, and MLOps.",
+  
+  "Infrastructure (DevOps, Cloud, Databases, Networking)": "Cloud platforms, servers, containers, CI/CD, databases, networking, system administration, infrastructure management, and deployment operations.",
+  
+  "Clinical Diagnosis, Treatment & Surgery": "Medical diagnosis, symptoms, diseases, clinical procedures, surgery, medical imaging, treatments, prognosis, and patient care topics.",
+  
+  "Medication & Pharmacology": "Drugs, medications, dosage information, side effects, drug interactions, prescriptions, pharmaceutical research, and the pharma industry.",
+  
+  "Mental Health (Clinical)": "Clinical psychology, psychiatric diagnosis, therapy, counseling, mental health disorders, psychiatric medications, and professional psychological care.",
+  
+  "Healthcare Organizations, System, Hospitals": "Healthcare systems, hospitals, medical organizations, insurance, healthcare administration, billing, health policy, and healthcare regulations.",
+  
+  "Nutrition": "Nutrition science, diet planning, food science, nutrients, meal planning, healthy eating, and weight management through food.",
+  
+  "Payments & Personal Budgeting": "Everyday spending, budgeting, saving money, paying bills, credit and debit cards, personal finance management, and household expenses.",
+
+  "Banking": "Bank accounts, loans, mortgages, interest rates, financial institutions, banking services, deposits, transfers, and related financial products.",
+
+  "Investment, Markets & Cryptocurrency": "Stocks, bonds, ETFs, mutual funds, trading, cryptocurrency, blockchain investments, market analysis, portfolio management, and financial markets.",
+
+  "Corporate Accounting": "Bookkeeping, financial statements, audits, business taxation, accounting standards, cost accounting, and corporate financial reporting.",
+
+  "Physics & Mathematics": "Physical laws, mechanics, thermodynamics, electromagnetism, quantum physics, astrophysics, mathematics, statistics, probability, and theoretical concepts.",
+
+  "Chemistry": "Chemical reactions, compounds, organic and inorganic chemistry, analytical chemistry, biochemistry, materials, and laboratory concepts.",
+
+  "Biology": "Living organisms, genetics, ecology, physiology, microbiology, evolution, anatomy, biodiversity, and life sciences.",
+
+  "Team Sports": "Football, soccer, basketball, hockey, baseball, volleyball, rugby, teams, players, leagues, tournaments, and match analysis.",
+
+  "Individual Sports": "Tennis, golf, boxing, martial arts, athletics, swimming, cycling, gymnastics, athletes, competitions, and performance.",
+
+  "Fitness & Training": "Exercise routines, gym workouts, strength training, conditioning, flexibility, endurance, nutrition for fitness, and healthy physical activity.",
+
+  "Civil, Structural & Architecture": "Infrastructure, bridges, roads, buildings, structural engineering, architecture, urban planning, construction, and building design.",
+
+  "Mechanical & Electrical Engineering": "Machines, manufacturing, robotics, mechanical systems, electrical circuits, electronics, power systems, automation, and engineering design.",
+
+  "Family & Relationships": "Romantic relationships, friendships, family dynamics, parenting, marriage, dating, communication, and interpersonal relationships.",
+
+  "Personal Growth & Reflection": "Self-improvement, personal development, life goals, productivity, mindfulness, motivation, habits, and personal values.",
+
+  "Travel": "Trip planning, destinations, vacations, tourism, travel itineraries, transportation, accommodations, and travel advice.",
+
+  "Marketing & Sales": "Advertising, branding, digital marketing, customer acquisition, sales strategies, promotions, market research, and consumer engagement.",
+
+  "Entrepreneurship & Startups": "Starting businesses, startups, founders, venture capital, fundraising, business models, innovation, and entrepreneurship.",
+
+  "Management & Strategy & Human Resources": "Leadership, corporate strategy, business operations, organizational management, hiring, recruiting, human resources, and workplace management.",
+
+  "Criminal & Civil Law": "Criminal offenses, criminal procedure, civil disputes, litigation, courts, legal rights, and judicial processes.",
+
+  "Labor, Family & Contract Law": "Employment law, labor regulations, divorce, child custody, family law, contracts between individuals, and legal agreements.",
+
+  "Corporate, Regulatory & International Law": "Business law, corporate governance, regulatory compliance, international law, trade law, intellectual property, securities law, and commercial regulations.",
+
+  "General Law (misc.)": "General legal questions, legal principles, legal procedures, and law-related topics that do not fit into more specific legal categories.",
+
+  "Game": "Video games, tabletop games, game design, game development, gaming industry, gameplay mechanics, reviews, and esports.",
+
+  "Film": "Movies, filmmaking, cinematography, screenwriting, actors, directors, film history, reviews, and film analysis.",
+
+  "Music": "Music theory, artists, bands, composition, music production, genres, instruments, recording, and the music industry.",
+
+  "Literature": "Books, novels, writing, poetry, authors, literary criticism, storytelling, publishing, and literary analysis.",
+
+  "Painting": "Painting, drawing, illustration, traditional and digital art, visual art techniques, art history, color theory, and artistic composition."
+}

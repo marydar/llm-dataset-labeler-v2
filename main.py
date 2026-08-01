@@ -1,28 +1,89 @@
-from dotenv import load_dotenv
-import os
+from tqdm import tqdm
 
-load_dotenv()
-from openai import OpenAI
+from src.loader import load_text_dataset
+from src.classifier import classify_batch
 
-client = OpenAI(
-  base_url="https://openrouter.ai/api/v1",
-  api_key=os.getenv("OPENROUTER_API_KEY"),
+from src.utils import (
+    load_json,
+    save_json,
+    random_delay
 )
 
-completion = client.chat.completions.create(
-  extra_headers={
-    "HTTP-Referer": "<YOUR_SITE_URL>", # Optional. Site URL for rankings on openrouter.ai.
-    "X-OpenRouter-Title": "<YOUR_SITE_NAME>", # Optional. Site title for rankings on openrouter.ai.
-  },
-  model="~openai/gpt-latest",
-  messages=[
-    {
-      "role": "user",
-      "content": "What is the meaning of life?"
-    }
-  ],
-  max_tokens=1000,
-  temperature=0.7,
-)
+from src.exporter import save_dataset
 
-print(completion.choices[0].message.content)
+
+from config import *
+
+
+
+def main():
+
+
+    labels = load_json(
+        "labels.json"
+    )
+
+
+    texts = load_text_dataset(
+        "YOUR_DATASET_NAME",
+        text_column="text"
+    )
+
+
+    results=[]
+
+
+
+    for i in tqdm(
+        range(
+            0,
+            len(texts),
+            BATCH_SIZE
+        )
+    ):
+
+
+        batch=texts[
+            i:i+BATCH_SIZE
+        ]
+
+
+        labeled = classify_batch(
+            batch,
+            labels
+        )
+
+
+        results.extend(
+            labeled
+        )
+
+
+        save_json(
+            results,
+            CHECKPOINT_PATH
+        )
+
+
+        random_delay(
+            REQUEST_DELAY_MIN,
+            REQUEST_DELAY_MAX
+        )
+
+
+
+    save_dataset(
+        results,
+        FINAL_DATASET_PATH
+    )
+
+
+    print(
+        "Finished:",
+        len(results)
+    )
+
+
+
+if __name__=="__main__":
+    main()
