@@ -13,11 +13,15 @@ OPENROUTER_API_KEY = os.getenv(
 BASE_URL = "https://openrouter.ai/api/v1"
 
 
-MODEL = "google/gemini-2.5-flash"
+# MODEL = "google/gemini-2.5-flash"
+# MODEL ="google/gemma-4-31b-it:free"
+# MODEL = "nvidia/nemotron-3.5-content-safety:free"
+MODEL = "openai/gpt-oss-20b:free"
 
+#
 
 # Generation
-BATCH_SIZE = 10
+BATCH_SIZE = 30
 
 MAX_TOKENS = 1500
 

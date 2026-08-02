@@ -31,7 +31,7 @@ def push_to_hub(
     ]
 
     dataset = Dataset.from_list(
-        results
+        final_results
     )
 
     dataset.push_to_hub(
