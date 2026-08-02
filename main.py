@@ -25,11 +25,16 @@ def main():
 
     print("Loading dataset...")
 
+    # texts = load_text_dataset(
+    #     "lmsys/lmsys-chat-1m",
+    #     conversation_column="conversation",
+    #     language_column="language",
+    #     max_samples=40
+    # )
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
-        conversation_column="conversation",
-        language_column="language",
-        max_samples=40
+        start_idx=300,
+        end_idx=400
     )
 
 
