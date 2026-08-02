@@ -21,7 +21,7 @@ MODEL = "openai/gpt-oss-20b:free"
 #
 
 # Generation
-BATCH_SIZE = 30
+BATCH_SIZE = 20
 
 MAX_TOKENS = 1500
 

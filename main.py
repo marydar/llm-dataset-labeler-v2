@@ -29,7 +29,7 @@ def main():
         "lmsys/lmsys-chat-1m",
         conversation_column="conversation",
         language_column="language",
-        max_samples=20
+        max_samples=40
     )
 
 

@@ -29,9 +29,7 @@ def ask_llm(prompt):
         ],
         extra_body={"reasoning": {"enabled": True}},
 
-        temperature=TEMPERATURE,
-
-        max_tokens=MAX_TOKENS
+        # max_tokens=MAX_TOKENS 
     )
     # print(response)
     # print(response.choices[0].message.content)
