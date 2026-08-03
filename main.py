@@ -33,8 +33,8 @@ def main():
     # )
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
-        start_idx=300,
-        end_idx=400
+        start_idx=500,
+        end_idx=520
     )
 
 
@@ -136,7 +136,7 @@ def main():
     
     push_to_hub(
         results,
-        "maryamdar/llm-chats-labeled"
+        "maryamdar/llm-chats-labeled-v2"  
     )
 
 

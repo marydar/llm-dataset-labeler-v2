@@ -2,6 +2,7 @@ import json
 import re
 from src.llm import ask_llm
 from config import KEEP_NOT_RELATED, NOT_RELATED_LABEL
+from src.validator import validate_results
 
 
 def create_prompt(
@@ -115,28 +116,28 @@ def classify_batch(
         texts
     )
 
-
-    results = validate_labels(
-        results,
-        labels.keys()
+    results = validate_results(
+        results
     )
+
+
     return results
 
 
 
-def validate_labels(results, allowed_labels):
+# def validate_labels(results, allowed_labels):
 
-    fixed = []
+#     fixed = []
 
-    for item in results:
+#     for item in results:
 
-        if item["label"] not in allowed_labels:
-            item["label"] = "Not Related"
+#         if item["label"] not in allowed_labels:
+#             item["label"] = "Not Related"
 
-        fixed.append(item)
+#         fixed.append(item)
 
-    return fixed
-import json
+#     return fixed
+# import json
 
 
 

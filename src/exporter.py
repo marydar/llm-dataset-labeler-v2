@@ -1,83 +1,64 @@
-from datasets import Dataset
-
-
-
-def save_dataset(
-        data,
-        path
-):
-
-    dataset = Dataset.from_list(
-        data
-    )
-
-
-    dataset.save_to_disk(
-        path
-    )
-    
-
-
-# def push_to_hub(
-#         results,
-#         repo_id
-# ):
-#     final_results = [
-#     {
-#         "text": x["text"],
-#         "label": x["label"]
-#     }
-#     for x in results
-#     ]
-
-#     dataset = Dataset.from_list(
-#         final_results
-#     )
-
-#     dataset.push_to_hub(
-#         repo_id
-#     )
-
-#     print(
-#         f"Uploaded to {repo_id}"
-#     )
-
-
-#     return dataset
-
 from datasets import (
     Dataset,
     load_dataset,
     concatenate_datasets
 )
 
-def push_to_hub(
-        results,
-        repo_id
-):
+
+FINAL_COLUMNS = [
+    "text",
+    "label",
+    "parent_label",
+    "generator_model",
+    "source"
+]
+
+
+def prepare_for_export(results):
     """
-    Downloads the existing HF dataset (if it exists),
-    merges the new samples,
-    removes duplicates,
-    and uploads the updated dataset.
+    Remove temporary fields before saving.
     """
 
-    # Keep only training columns
-    final_results = [
+    return [
         {
-            "text": item["text"],
-            "label": item["label"]
+            key: item[key]
+            for key in FINAL_COLUMNS
+            if key in item
         }
         for item in results
     ]
 
-    new_dataset = Dataset.from_list(
-        final_results
+
+def save_dataset(
+        results,
+        path
+):
+
+    results = prepare_for_export(results)
+
+    dataset = Dataset.from_list(
+        results
     )
 
-    # -------------------------
-    # Download existing dataset
-    # -------------------------
+    dataset.save_to_disk(path)
+
+    print(
+        f"Saved {len(dataset)} samples."
+    )
+
+
+
+def push_to_hub(
+        results,
+        repo_id
+):
+
+    results = prepare_for_export(results)
+
+    new_dataset = Dataset.from_list(
+        results
+    )
+
 
     try:
 
@@ -107,17 +88,16 @@ def push_to_hub(
 
         merged = new_dataset
 
-    # -------------------------
-    # Remove duplicates
-    # -------------------------
 
+    # Remove duplicate texts
     df = merged.to_pandas()
 
     before = len(df)
 
     df = df.drop_duplicates(
-        subset="text"
-    )
+        subset=["text"],
+        keep="first"
+    ).reset_index(drop=True)
 
     after = len(df)
 
@@ -125,18 +105,17 @@ def push_to_hub(
         f"Removed {before-after} duplicates."
     )
 
+
     merged = Dataset.from_pandas(
         df,
         preserve_index=False
     )
 
-    # -------------------------
-    # Upload
-    # -------------------------
 
     merged.push_to_hub(
         repo_id
     )
+
 
     print(
         f"Uploaded {len(merged)} samples to {repo_id}"
