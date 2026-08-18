@@ -33,8 +33,8 @@ def main():
     # )
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
-        start_idx=500,
-        end_idx=520
+        start_idx=3200,
+        end_idx=3250
     )
 
 
@@ -94,16 +94,28 @@ def main():
 
     # Remove low confidence
     MIN_CONFIDENCE = 0.8
+    counter_conf = 0
+    counter_related = 0
 
+    for x in results:
+        if x.get("confidence_score", 0.0) < MIN_CONFIDENCE:
+            print(x.get("confidence_score", 0.0))
+            counter_conf += 1
+            
+    
+            
+            
+    # results = [
+    #     x for x in results
+    #     if x.get(
+    #         "confidence",
+    #         0
+    #     ) >= MIN_CONFIDENCE
+    # ]
 
-    results = [
-        x for x in results
-        if x.get(
-            "confidence",
-            0
-        ) >= MIN_CONFIDENCE
-    ]
-
+    for x in results:
+        if x["label"] == "Not Related":
+            counter_related += 1
 
     # Remove Not Related
     results = [
@@ -113,7 +125,7 @@ def main():
 
 
     print(
-        f"After filtering: {len(results)}"
+        f"After filtering: {len(results)}, removed {counter_related} Not Related and {counter_conf} low confidence"
     )
 
 

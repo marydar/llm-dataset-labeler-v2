@@ -172,20 +172,21 @@ def parse_response(response, texts):
 
             label = item["label"]
 
-            # Skip unrelated prompts
-            if label == "Not Related":
-                continue
+            # # Skip unrelated prompts
+            # if label == "Not Related":
+            #     continue
 
             output.append(
                 {
                     "text": texts[idx],
                     "label": item["label"],
-                    "confidence": item.get(
+                    "confidence_score": item.get(
                         "confidence",
-                        0
+                        0.0
                     )
                 }
             )
+            # print(f"parse{output}")
 
         return output
 
@@ -217,14 +218,18 @@ def wparse_response(
 
             label = item["label"]
 
-            # Skip unrelated prompts
-            if label == "Not Related":
-                continue
+            # # Skip unrelated prompts
+            # if label == "Not Related":
+            #     continue
 
             output.append(
                 {
                     "text": texts[idx],
-                    "label": label
+                    "label": label,
+                    "confidence_score": item.get(
+                        "confidence",
+                        0.0
+                    )
                 }
             )
 

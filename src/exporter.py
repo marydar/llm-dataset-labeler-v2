@@ -1,7 +1,9 @@
 from datasets import (
     Dataset,
     load_dataset,
-    concatenate_datasets
+    concatenate_datasets,
+    Features,
+    Value
 )
 
 
@@ -10,24 +12,39 @@ FINAL_COLUMNS = [
     "label",
     "parent_label",
     "generator_model",
-    "source"
+    "source",
+    "confidence_score"
 ]
 
 
+FEATURES = Features({
+    "text": Value("string"),
+    "label": Value("string"),
+    "parent_label": Value("string"),
+    "generator_model": Value("string"),
+    "source": Value("string"),
+    "confidence_score": Value("float32"),
+})
+
+
 def prepare_for_export(results):
-    """
-    Remove temporary fields before saving.
-    """
 
     return [
         {
-            key: item[key]
-            for key in FINAL_COLUMNS
-            if key in item
+            **{
+                key: item[key]
+                for key in FINAL_COLUMNS
+                if key in item
+            },
+            "confidence_score": round(
+                float(item["confidence_score"]),
+                2
+            )
+            if "confidence_score" in item and item["confidence_score"] is not None
+            else None
         }
         for item in results
     ]
-
 
 def save_dataset(
         results,
@@ -37,7 +54,8 @@ def save_dataset(
     results = prepare_for_export(results)
 
     dataset = Dataset.from_list(
-        results
+        results,
+        features=FEATURES
     )
 
     dataset.save_to_disk(path)
@@ -45,7 +63,6 @@ def save_dataset(
     print(
         f"Saved {len(dataset)} samples."
     )
-
 
 
 def push_to_hub(
@@ -56,9 +73,9 @@ def push_to_hub(
     results = prepare_for_export(results)
 
     new_dataset = Dataset.from_list(
-        results
+        results,
+        features=FEATURES
     )
-
 
     try:
 
@@ -72,6 +89,9 @@ def push_to_hub(
         print(
             f"Existing samples: {len(old_dataset)}"
         )
+
+        # Make sure the old dataset also uses float32
+        old_dataset = old_dataset.cast(FEATURES)
 
         merged = concatenate_datasets(
             [
@@ -108,6 +128,7 @@ def push_to_hub(
 
     merged = Dataset.from_pandas(
         df,
+        features=FEATURES,
         preserve_index=False
     )
 

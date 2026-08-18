@@ -124,6 +124,7 @@ def validate_results(results):
 
         text = item.get("text", "")
         label = item.get("label", "")
+        confidence_score = item.get("confidence_score", 0.0)
 
         # text and label must exist
         if not isinstance(text, str):
@@ -151,7 +152,8 @@ def validate_results(results):
             "label": label,
             "parent_label": CHILD_TO_PARENT[label],
             "generator_model": MODEL,
-            "source": "real"
+            "source": "real",
+            "confidence_score": confidence_score,
         })
 
     return cleaned
