@@ -1,6 +1,7 @@
 import time
 from tqdm import tqdm
 
+from src.remove_checkpoint_duplicates import remove_checkpoint_duplicates
 from src.loader import load_text_dataset
 from src.classifier import classify_batch
 
@@ -35,7 +36,11 @@ def main():
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
         start_idx=3400,
-        end_idx=3500
+        end_idx=3550
+    )
+    texts = remove_checkpoint_duplicates(
+        texts,
+        checkpoint_path=CHECKPOINT_PATH
     )
 
 
