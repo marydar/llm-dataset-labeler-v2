@@ -1,4 +1,5 @@
 from config import MODEL
+from config import REASONING
 
 VALID_LABELS = {
     "Desktop & Mobile & Web Development",
@@ -95,6 +96,9 @@ HIERARCHY = {
         "Music",
         "Literature",
         "Painting"
+    ],
+    "Not Related": [
+        "Not Related"
     ]
 }
 
@@ -145,13 +149,15 @@ def validate_results(results):
 
         # Remove invalid labels
         if label not in VALID_LABELS:
-            continue
+            print(f"Skipping {label}")
+            if label != "Not Related":
+                continue
 
         cleaned.append({
             "text": text,
             "label": label,
             "parent_label": CHILD_TO_PARENT[label],
-            "generator_model": MODEL,
+            "generator_model": f"{MODEL}/Reasoning = {REASONING}",
             "source": "real",
             "confidence_score": confidence_score,
         })

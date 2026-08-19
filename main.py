@@ -1,3 +1,4 @@
+import time
 from tqdm import tqdm
 
 from src.loader import load_text_dataset
@@ -33,8 +34,8 @@ def main():
     # )
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
-        start_idx=3200,
-        end_idx=3250
+        start_idx=3400,
+        end_idx=3500
     )
 
 
@@ -47,6 +48,8 @@ def main():
 
 
     # Process batches
+    request_count = 0
+
     for i in tqdm(
         range(
             0,
@@ -56,22 +59,20 @@ def main():
         desc="Classifying batches"
     ):
 
-
         batch = texts[
             i:i+BATCH_SIZE
         ]
-
 
         labeled = classify_batch(
             batch,
             labels
         )
 
-
         results.extend(
             labeled
         )
 
+        request_count += 1
 
         # Save checkpoint after every batch
         save_json(
@@ -79,54 +80,17 @@ def main():
             CHECKPOINT_PATH
         )
 
-
-        # Avoid hitting OpenRouter limits
-        random_delay(
-            REQUEST_DELAY_MIN,
-            REQUEST_DELAY_MAX
-        )
+        if request_count % REQUESTS_BEFORE_SLEEP == 0:
+            print(
+                f"\n{REQUESTS_BEFORE_SLEEP} requests completed. Sleeping for {SLEEP_SECONDS} seconds..."
+            )
+            time.sleep(SLEEP_SECONDS)  # Sleep for seconds                      
 
 
     print(
         f"Before filtering: {len(results)}"
     )
 
-
-    # Remove low confidence
-    MIN_CONFIDENCE = 0.8
-    counter_conf = 0
-    counter_related = 0
-
-    for x in results:
-        if x.get("confidence_score", 0.0) < MIN_CONFIDENCE:
-            print(x.get("confidence_score", 0.0))
-            counter_conf += 1
-            
-    
-            
-            
-    # results = [
-    #     x for x in results
-    #     if x.get(
-    #         "confidence",
-    #         0
-    #     ) >= MIN_CONFIDENCE
-    # ]
-
-    for x in results:
-        if x["label"] == "Not Related":
-            counter_related += 1
-
-    # Remove Not Related
-    results = [
-        x for x in results
-        if x["label"] != "Not Related"
-    ]
-
-
-    print(
-        f"After filtering: {len(results)}, removed {counter_related} Not Related and {counter_conf} low confidence"
-    )
 
 
     save_json(

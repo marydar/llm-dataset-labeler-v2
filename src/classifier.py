@@ -1,7 +1,6 @@
 import json
 import re
 from src.llm import ask_llm
-from config import KEEP_NOT_RELATED, NOT_RELATED_LABEL
 from src.validator import validate_results
 
 
@@ -125,21 +124,6 @@ def classify_batch(
 
 
 
-# def validate_labels(results, allowed_labels):
-
-#     fixed = []
-
-#     for item in results:
-
-#         if item["label"] not in allowed_labels:
-#             item["label"] = "Not Related"
-
-#         fixed.append(item)
-
-#     return fixed
-# import json
-
-
 
 def parse_response(response, texts):
 
@@ -198,86 +182,3 @@ def parse_response(response, texts):
 
         return []
     
-def wparse_response(
-        response,
-        texts
-):
-
-    try:
-
-        data = json.loads(response)
-
-        output = []
-
-        for item in data:
-
-            idx = item["text_id"] - 1
-
-            if not (0 <= idx < len(texts)):
-                continue
-
-            label = item["label"]
-
-            # # Skip unrelated prompts
-            # if label == "Not Related":
-            #     continue
-
-            output.append(
-                {
-                    "text": texts[idx],
-                    "label": label,
-                    "confidence_score": item.get(
-                        "confidence",
-                        0.0
-                    )
-                }
-            )
-
-        return output
-
-
-    except Exception as e:
-
-        print("Failed parsing JSON")
-        print(e)
-        print(response)
-
-        return []
-    
-def eparse_response(
-        response,
-        texts
-):
-
-    try:
-
-        data = json.loads(response)
-
-
-        output=[]
-
-
-        for item in data:
-
-            idx=item["text_id"]-1
-
-            output.append(
-                {
-                    "text":texts[idx],
-                    "label":item["label"]
-                }
-            )
-
-
-        return output
-
-
-    except Exception:
-
-        print(
-            "Failed JSON:"
-        )
-
-        print(response)
-
-        return []
