@@ -8,40 +8,40 @@ VALID_LABELS = {
     "Infrastructure (DevOps, Cloud, Databases, Networking)",
     "Clinical Diagnosis, Treatment & Surgery",
     "Medication & Pharmacology",
-    "Mental Health (Clinical)",
+    "Mental Health",
     "Healthcare Organizations, System, Hospitals",
     "Nutrition",
     "Payments & Personal Budgeting",
-    "Banking",
     "Investment, Markets & Cryptocurrency",
-    "Corporate Accounting",
-    "Physics & Mathematics",
+    "Corporate",
+    "Physics, Mathematics",
     "Chemistry",
     "Biology",
     "Team Sports",
     "Individual Sports",
-    "Fitness & Training",
+    "Fitness",
     "Civil, Structural & Architecture",
     "Mechanical & Electrical Engineering",
     "Family & Relationships",
-    "Personal Growth & Reflection",
+    "Personal",
     "Travel",
     "Marketing & Sales",
     "Entrepreneurship & Startups",
     "Management & Strategy & Human Resources",
-    "Criminal & Civil Law",
-    "Labor, Family & Contract Law",
-    "Corporate, Regulatory & International Law",
-    "General Law (misc.)",
+    "Criminal Law",
+    "Family Law",
+    "Corporate Law",
+    "Civil Law" ,
     "Game",
     "Film",
     "Music",
     "Literature",
     "Painting",
+    "Not Related",
 }
 
 HIERARCHY = {
-    "Technology & Programming": [
+    "Programming / Technology": [
         "Desktop & Mobile & Web Development",
         "Cybersecurity",
         "AI / Machine Learning / Data Science",
@@ -50,33 +50,32 @@ HIERARCHY = {
     "Medical": [
         "Clinical Diagnosis, Treatment & Surgery",
         "Medication & Pharmacology",
-        "Mental Health (Clinical)",
+        "Mental Health",
         "Healthcare Organizations, System, Hospitals",
         "Nutrition"
     ],
     "Finance": [
         "Payments & Personal Budgeting",
-        "Banking",
         "Investment, Markets & Cryptocurrency",
-        "Corporate Accounting"
+        "Corporate"
     ],
     "Science": [
-        "Physics & Mathematics",
+        "Physics, Mathematics",
         "Chemistry",
         "Biology"
     ],
     "Sports": [
         "Team Sports",
         "Individual Sports",
-        "Fitness & Training"
+        "Fitness"
     ],
     "Engineering": [
         "Civil, Structural & Architecture",
-        "Mechanical & Electrical Engineering"
+        "Mechanical & Electrical Engineering",
     ],
     "Personal": [
         "Family & Relationships",
-        "Personal Growth & Reflection",
+        "Personal",
         "Travel"
     ],
     "Business": [
@@ -84,13 +83,13 @@ HIERARCHY = {
         "Entrepreneurship & Startups",
         "Management & Strategy & Human Resources"
     ],
-    "Law": [
-        "Criminal & Civil Law",
-        "Labor, Family & Contract Law",
-        "Corporate, Regulatory & International Law",
-        "General Law (misc.)"
+     "Law": [
+        "Criminal Law",
+        "Family Law",
+        "Corporate Law",
+        "Civil Law" 
     ],
-    "Art": [
+     "Art": [
         "Game",
         "Film",
         "Music",

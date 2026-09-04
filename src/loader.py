@@ -12,6 +12,8 @@ def is_attack(
     Returns True if the item should be considered an attack
     and therefore filtered out.
     """
+    
+    return False
 
     # Filter redacted samples
     if item.get(redacted_column) is True:

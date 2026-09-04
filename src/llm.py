@@ -1,6 +1,6 @@
 from openai import OpenAI
 from config import (
-    OPENROUTER_API_KEY,
+    NVIDIA_API_KEY,
     BASE_URL,
     MODEL,
     MAX_TOKENS,
@@ -10,7 +10,7 @@ from config import (
 
 
 client = OpenAI(
-    api_key=OPENROUTER_API_KEY,
+    api_key=NVIDIA_API_KEY,
     base_url=BASE_URL
 )
 
@@ -29,8 +29,8 @@ def ask_llm(prompt):
             }
         ],
         temperature=1,
-        top_p=1,
-        max_tokens=16384,
+        top_p=0.95,
+        max_tokens=4096,
         seed=42,
         stream=False,
         extra_body={
@@ -44,5 +44,37 @@ def ask_llm(prompt):
 
     return response.choices[0].message.content.strip()
 
+
+# from openai import OpenAI
+
+# client = OpenAI(
+#     api_key=NVIDIA_API_KEY,
+#     base_url=BASE_URL
+# )
+
+
+# def ask_llm(prompt):
+
+#     response = client.chat.completions.create(
+#         model=MODEL,
+
+#         messages=[
+#             {
+#                 "role": "user",
+#                 "content": prompt
+#             }
+#         ],
+
+#         temperature=1,
+#         top_p=0.95,
+#         max_tokens=16384,
+#         seed=42,
+
+#         stream=False,
+
+#         reasoning_effort="max",
+#     )
+
+#     return response.choices[0].message.content.strip()
 
 

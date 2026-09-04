@@ -6,11 +6,11 @@ load_dotenv()
 
 
 # OpenRouter
-OPENROUTER_API_KEY = os.getenv(
-    "OPENROUTER_API_KEY"
-)
+# OPENROUTER_API_KEY = os.getenv(
+#     "OPENROUTER_API_KEY"
+# )
 
-BASE_URL = "https://openrouter.ai/api/v1"
+# BASE_URL = "https://openrouter.ai/api/v1"
 
 
 # MODEL = "google/gemini-2.5-flash"
@@ -22,16 +22,19 @@ BASE_URL = "https://openrouter.ai/api/v1"
 
 
 # Nvidia
-OPENROUTER_API_KEY = os.getenv(
+NVIDIA_API_KEY = os.getenv(
     "NVIDIA_API_KEY"
 )
 
 BASE_URL = "https://integrate.api.nvidia.com/v1"
-MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+# MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+MODEL = "deepseek-ai/deepseek-v4-pro-0813"
+# MODEL = "moonshotai/kimi-k3"
+
 REASONING = False
 
-REQUESTS_BEFORE_SLEEP = 5
-SLEEP_SECONDS = 5
+REQUESTS_BEFORE_SLEEP = 30
+SLEEP_SECONDS = 30
 
 #
 

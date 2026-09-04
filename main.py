@@ -13,6 +13,7 @@ from src.utils import (
 
 from src.exporter import save_dataset
 from src.exporter import push_to_hub
+import os
 
 from config import *
 
@@ -35,8 +36,8 @@ def main():
     # )
     texts = load_text_dataset(
         "lmsys/lmsys-chat-1m",
-        start_idx=3400,
-        end_idx=3550
+        start_idx=11000,
+        end_idx=12000,
     )
     texts = remove_checkpoint_duplicates(
         texts,
@@ -50,7 +51,13 @@ def main():
 
 
     results = []
-
+    
+    if os.path.exists(CHECKPOINT_PATH):
+        results = load_json(CHECKPOINT_PATH)
+        print(f"Loaded {len(results)} results from checkpoint")
+    else:
+        results = []
+        print("No checkpoint found. Starting from empty results.")
 
     # Process batches
     request_count = 0
@@ -117,7 +124,7 @@ def main():
     
     push_to_hub(
         results,
-        "maryamdar/llm-chats-labeled-v2"  
+        "maryamdar/topic-classification-dataset-real"  
     )
 
 
