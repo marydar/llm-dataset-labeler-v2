@@ -1,4 +1,4 @@
-from config import MODEL
+from config import MODEL, SOURCE_DATASET
 from config import REASONING
 
 VALID_LABELS = {
@@ -159,6 +159,7 @@ def validate_results(results):
             "generator_model": f"{MODEL}/Reasoning = {REASONING}",
             "source": "real",
             "confidence_score": confidence_score,
+            "source_dataset": SOURCE_DATASET,
         })
 
     return cleaned

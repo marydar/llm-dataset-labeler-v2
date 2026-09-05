@@ -13,7 +13,8 @@ FINAL_COLUMNS = [
     "parent_label",
     "generator_model",
     "source",
-    "confidence_score"
+    "confidence_score",
+    "source_dataset",
 ]
 
 
@@ -24,6 +25,7 @@ FEATURES = Features({
     "generator_model": Value("string"),
     "source": Value("string"),
     "confidence_score": Value("float32"),
+    "source_dataset": Value("string"),
 })
 
 

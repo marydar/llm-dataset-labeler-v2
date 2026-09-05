@@ -193,7 +193,7 @@ def validate_and_add_metadata(dataset):
                 "label": label,
                 "parent_label": CHILD_TO_PARENT[label],
                 "generator_model": MODEL,
-                "source": "real"
+                "source": "real",
             }
         )
 

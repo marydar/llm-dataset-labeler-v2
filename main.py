@@ -34,11 +34,22 @@ def main():
     #     language_column="language",
     #     max_samples=40
     # )
+    # texts = load_text_dataset(
+    #     "lmsys/lmsys-chat-1m",
+    #     start_idx=11000,
+    #     end_idx=12000,
+    # )
+    
     texts = load_text_dataset(
-        "lmsys/lmsys-chat-1m",
-        start_idx=11000,
-        end_idx=12000,
+        dataset_name=SOURCE_DATASET,
+        config_name=CONFIG_NAME,
+        text_columns=["question_2"],
+        split="train",
+        start_idx=0,
+        end_idx=20,
     )
+    print(texts[2])
+    return 
     texts = remove_checkpoint_duplicates(
         texts,
         checkpoint_path=CHECKPOINT_PATH

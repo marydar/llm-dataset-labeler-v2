@@ -1,73 +1,46 @@
 from datasets import load_dataset
 from tqdm import tqdm
-import json
-
-
-def is_attack(
-    item,
-    moderation_column="openai moderation",
-    redacted_column="redacted"
-):
-    """
-    Returns True if the item should be considered an attack
-    and therefore filtered out.
-    """
-    
-    return False
-
-    # Filter redacted samples
-    if item.get(redacted_column) is True:
-        return True
-
-    moderation = item.get(moderation_column)
-
-    if not moderation:
-        return False
-
-    try:
-        # The column may be stored as a JSON string
-        if isinstance(moderation, str):
-            moderation = json.loads(moderation)
-
-        # Your data contains a list with one moderation result
-        if isinstance(moderation, list):
-            if not moderation:
-                return False
-
-            moderation = moderation[0]
-
-        # Filter explicitly flagged samples
-        if moderation.get("flagged", False):
-            return True
-
-        # Filter samples where any moderation category is True
-        categories = moderation.get("categories", {})
-
-        if any(categories.values()):
-            return True
-
-    except Exception:
-        # If the moderation field cannot be parsed,
-        # don't filter the sample.
-        return False
-
-    return False
 
 
 def load_text_dataset(
     dataset_name,
+    text_columns,
+    config_name=None,
     split="train",
-    conversation_column="conversation",
-    language_column="language",
     start_idx=0,
-    end_idx=None
+    end_idx=None,
+    separator="\n\n",
 ):
+    """
+    Flexible Hugging Face text dataset loader.
 
-    dataset = load_dataset(
-        dataset_name,
-        split=split
-    )
+    text_columns:
+        A single column name or a list of column names.
+        Multiple columns are concatenated in the given order.
 
+    config_name:
+        Hugging Face dataset configuration name.
+        Required for datasets with multiple configs.
+    """
+
+    # Allow a single column name
+    if isinstance(text_columns, str):
+        text_columns = [text_columns]
+
+    # Load dataset
+    if config_name is None:
+        dataset = load_dataset(
+            dataset_name,
+            split=split
+        )
+    else:
+        dataset = load_dataset(
+            dataset_name,
+            config_name,
+            split=split
+        )
+
+    # Select requested range
     if end_idx is None:
         end_idx = len(dataset)
 
@@ -78,30 +51,33 @@ def load_text_dataset(
     texts = []
 
     for item in tqdm(dataset):
+        
+        parts = []
 
-        # Remove non-English
-        if item.get(language_column) != "English":
+        # Extract columns in requested order
+        for column in text_columns:
+
+            value = item.get(column)
+
+            if value is None:
+                continue
+
+            value = str(value).strip()
+
+            if value:
+                parts.append(value)
+
+        # Skip rows where all requested columns are empty
+        if not parts:
             continue
 
-        # Remove attacks
-        if is_attack(item):
+        # Combine columns
+        text = separator.join(parts)
+
+        # Remove very short texts
+        if len(text.split()) < 5:
             continue
 
-        conversation = item.get(conversation_column)
-
-        if not conversation:
-            continue
-
-        for msg in conversation:
-
-            if msg["role"] == "user":
-
-                text = msg["content"].strip()
-
-                # Remove very short texts
-                if len(text.split()) >= 5:
-                    texts.append(text)
-
-                break
+        texts.append(text)
 
     return texts
