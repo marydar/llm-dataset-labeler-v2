@@ -29,27 +29,29 @@ def main():
     print("Loading dataset...")
 
     # texts = load_text_dataset(
-    #     "lmsys/lmsys-chat-1m",
-    #     conversation_column="conversation",
+    #     dataset_name=SOURCE_DATASET,
+    #     conversation_column="conversation_a",
     #     language_column="language",
     #     max_samples=40
     # )
-    # texts = load_text_dataset(
-    #     "lmsys/lmsys-chat-1m",
-    #     start_idx=11000,
-    #     end_idx=12000,
-    # )
-    
     texts = load_text_dataset(
         dataset_name=SOURCE_DATASET,
-        config_name=CONFIG_NAME,
-        text_columns=["question_2"],
-        split="train",
+        conversation_column="conversation_a",
+        language_column="language",
         start_idx=0,
-        end_idx=20,
+        end_idx=500,
     )
+    
+    # texts = load_text_dataset(
+    #     dataset_name=SOURCE_DATASET,
+    #     config_name=CONFIG_NAME,
+    #     text_columns=["question"],
+    #     split="train",
+    #     start_idx=100,
+    #     end_idx=200,
+    # )
     print(texts[2])
-    return 
+    # return 
     texts = remove_checkpoint_duplicates(
         texts,
         checkpoint_path=CHECKPOINT_PATH
@@ -135,7 +137,7 @@ def main():
     
     push_to_hub(
         results,
-        "maryamdar/topic-classification-dataset-real"  
+        "maryamdar/topic-classification-dataset-real-2"  
     )
 
 

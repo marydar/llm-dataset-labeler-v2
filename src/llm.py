@@ -17,7 +17,6 @@ client = OpenAI(
 
 
 def ask_llm(prompt):
-
     response = client.chat.completions.create(
 
         model=MODEL,

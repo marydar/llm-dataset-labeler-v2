@@ -56,5 +56,5 @@ NOT_RELATED_LABEL = "Not Related"
 CHECKPOINT_PATH = "output/checkpoint.json"
 
 FINAL_DATASET_PATH = "output/labeled_dataset"
-SOURCE_DATASET  = "lmsys/lmsys-chat-1m"
+SOURCE_DATASET  = "lmsys/chatbot_arena_conversations"
 CONFIG_NAME = None

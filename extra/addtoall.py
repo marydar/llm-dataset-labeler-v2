@@ -15,12 +15,28 @@ ds2 = ds2["train"]
 # Select second_ generation groups
 # --------------------------------------------------
 
+# second_ds = ds2.filter(
+#     lambda x: x["generation_group"].startswith("second_")
+# )
+
+# print(f"Selected {len(second_ds)} rows from ds2")
+
+# --------------------------------------------------
+# Select specific generation groups
+# --------------------------------------------------
+
+SELECTED_GENERATION_GROUPS = [
+    "second_label_desc_single_deepseek",
+    "second_label_desc_single_deepseek_2",
+    "second_label_desc_single_deepseek_3",
+    "second_label_desc_single_deepseek_4",
+]
+
 second_ds = ds2.filter(
-    lambda x: x["generation_group"].startswith("second_")
+    lambda x: x["generation_group"] in SELECTED_GENERATION_GROUPS
 )
 
 print(f"Selected {len(second_ds)} rows from ds2")
-
 
 # --------------------------------------------------
 # Fix columns for the new rows
