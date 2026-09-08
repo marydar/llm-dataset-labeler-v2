@@ -16,7 +16,7 @@ client = OpenAI(
 
 
 
-def ask_llm(prompt):
+def ask_llm(prompt, seed = 42):
     response = client.chat.completions.create(
 
         model=MODEL,
@@ -30,7 +30,7 @@ def ask_llm(prompt):
         temperature=1,
         top_p=0.95,
         max_tokens=4096,
-        seed=42,
+        seed=seed,
         stream=False,
         extra_body={
         "chat_template_kwargs": {
@@ -38,7 +38,7 @@ def ask_llm(prompt):
         }
     }
     )
-    # print(response)
+    # print(f"seed : {seed}")
     # print(response.choices[0].message.content)
 
     return response.choices[0].message.content.strip()

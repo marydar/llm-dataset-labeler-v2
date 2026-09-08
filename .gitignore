@@ -70,6 +70,7 @@ checkpoints/
 # Hugging Face local datasets
 dataset/
 datasets/
+dataset_cache/
 .cache/
 
 

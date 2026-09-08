@@ -27,34 +27,34 @@ NVIDIA_API_KEY = os.getenv(
 )
 
 BASE_URL = "https://integrate.api.nvidia.com/v1"
-# MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
-MODEL = "deepseek-ai/deepseek-v4-pro-0813"
+MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+# MODEL = "deepseek-ai/deepseek-v4-pro-0813"
 # MODEL = "moonshotai/kimi-k3"
 
 REASONING = False
-
 REQUESTS_BEFORE_SLEEP = 30
 SLEEP_SECONDS = 30
 
-#
-
 # Generation
 BATCH_SIZE = 10
-
 MAX_TOKENS = 1500
-
 TEMPERATURE = 0.2
 
 
 # Safety
 REQUEST_DELAY_MIN = 4
 REQUEST_DELAY_MAX = 8
-KEEP_NOT_RELATED = False
-NOT_RELATED_LABEL = "Not Related"
 
 # Output
 CHECKPOINT_PATH = "output/checkpoint.json"
-
 FINAL_DATASET_PATH = "output/labeled_dataset"
-SOURCE_DATASET  = "lmsys/chatbot_arena_conversations"
+HF_REPO = "maryamdar/topic-classification-dataset-real-labeled"
+
+#Load source dataset
+SOURCE_DATASET  = "lmsys/lmsys-chat-1m"
 CONFIG_NAME = None
+# the range of the source dataset to be used for labeling
+TEXT_COLUMNS=["text"]
+SPLIT="train"
+START_IDX=0
+END_IDX=1000

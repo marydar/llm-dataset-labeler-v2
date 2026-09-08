@@ -9,5 +9,5 @@
 |6|leomaurodesenv/QASports2|https://huggingface\.co/datasets/leomaurodesenv/QASports2|sport|question: 3–625 / context: 1–256 / answer: 30–280|N/A||---|---|---|---|---|---|
 |7|PedroCJardim/QASports|https://huggingface\.co/datasets/PedroCJardim/QASports|sport|context: 255–17,778 / question: 1–594 / answer: 30–542|N/A||---|---|---|---|---|---|
 |8|DavidConka/fitness-qa-dataset|https://huggingface\.co/datasets/DavidConka/fitness-qa-dataset|sport|question: 20–158 / answer: 0–454|N/A||---|---|---|---|---|---|
-|9|lmsys/lmsys-chat-1m|https://huggingface.co/datasets/lmsys/lmsys-chat-1m|general|conversation(role:user):|N/A||---|---|---|---|---|---|
-|10|lmsys/chatbot_arena_conversations|https://huggingface.co/datasets/lmsys/chatbot_arena_conversations|general|conversation_a(role:user):/conversation_a(role:user):|N/A|
+|9|lmsys/lmsys-chat-1m|https://huggingface.co/datasets/lmsys/lmsys-chat-1m|general|conversation(role:user):1-96,115/conversation(full)1-6,640,848|N/A||---|---|---|---|---|---|
+|10|lmsys/chatbot_arena_conversations|https://huggingface.co/datasets/lmsys/chatbot_arena_conversations|general|conversation_a(role:user):6-11,876/conversation(full):12-19,215/conversation_b(role:user):6-11,876/conversation(full):19-18,806|N/A||---|---|---|---|---|---|

@@ -15,7 +15,7 @@ ds2 = ds2["train"]
 # Select ds2 from index a to the end
 # --------------------------------------------------
 
-a = 15939
+a = 25671
 
 ds2 = ds2.select(range(a, len(ds2)))
 
@@ -26,21 +26,21 @@ print(f"ds2 after index {a}: {len(ds2)} rows")
 # Select second_ generation groups
 # --------------------------------------------------
 
-second_ds = ds2.filter(
-    lambda x: (
-        x["generation_group"] is not None
-        and x["generation_group"].startswith("second_")
-    )
-)
+# second_ds = ds2.filter(
+#     lambda x: (
+#         x["generation_group"] is not None
+#         and x["generation_group"].startswith("second_")
+#     )
+# )
 
-print(f"Selected {len(second_ds)} rows from ds2")
+# print(f"Selected {len(second_ds)} rows from ds2")
 
 
 # --------------------------------------------------
 # Fix columns for the new rows
 # --------------------------------------------------
 
-second_ds = second_ds.map(
+second_ds = ds2.map(
     lambda x: {
         "old_label": None,
         "old_parent_label": None,

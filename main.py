@@ -2,8 +2,8 @@ import time
 from tqdm import tqdm
 
 from src.remove_checkpoint_duplicates import remove_checkpoint_duplicates
-from src.loader import load_text_dataset
-from src.classifier import classify_batch
+from src.shuffle_loader import load_text_dataset
+from src.classifier_three_try import classify_batch
 
 from src.utils import (
     load_json,
@@ -28,29 +28,24 @@ def main():
 
     print("Loading dataset...")
 
+    # for the dataset that had many languages
     # texts = load_text_dataset(
     #     dataset_name=SOURCE_DATASET,
-    #     conversation_column="conversation_a",
+    #     conversation_column=TEXT_COLUMNS,
     #     language_column="language",
-    #     max_samples=40
+    #     start_idx=START_IDX,
+    #     end_idx=END_IDX,
     # )
+    
     texts = load_text_dataset(
         dataset_name=SOURCE_DATASET,
-        conversation_column="conversation_a",
-        language_column="language",
-        start_idx=0,
-        end_idx=500,
+        config_name=CONFIG_NAME,
+        text_columns=TEXT_COLUMNS,
+        split=SPLIT,
+        start_idx=START_IDX,
+        end_idx=END_IDX,
     )
-    
-    # texts = load_text_dataset(
-    #     dataset_name=SOURCE_DATASET,
-    #     config_name=CONFIG_NAME,
-    #     text_columns=["question"],
-    #     split="train",
-    #     start_idx=100,
-    #     end_idx=200,
-    # )
-    print(texts[2])
+    # print(texts[2])
     # return 
     texts = remove_checkpoint_duplicates(
         texts,
@@ -137,7 +132,7 @@ def main():
     
     push_to_hub(
         results,
-        "maryamdar/topic-classification-dataset-real-2"  
+        HF_REPO
     )
 
 
