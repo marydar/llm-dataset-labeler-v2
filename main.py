@@ -2,7 +2,7 @@ import time
 from tqdm import tqdm
 
 from src.remove_checkpoint_duplicates import remove_checkpoint_duplicates
-from src.shuffle_loader import load_text_dataset
+from src.shuffle_loader_subset import load_text_dataset
 from src.classifier_three_try import classify_batch
 
 from src.utils import (
@@ -37,14 +37,32 @@ def main():
     #     end_idx=END_IDX,
     # )
     
+    # texts = load_text_dataset(
+    #     dataset_name=SOURCE_DATASET,
+    #     config_name=CONFIG_NAME,
+    #     text_columns=TEXT_COLUMNS,
+    #     split=SPLIT,
+    #     start_idx=START_IDX,
+    #     end_idx=END_IDX,
+    # )
+    
     texts = load_text_dataset(
         dataset_name=SOURCE_DATASET,
-        config_name=CONFIG_NAME,
-        text_columns=TEXT_COLUMNS,
+        subset="fa",
         split=SPLIT,
         start_idx=START_IDX,
         end_idx=END_IDX,
+        shuffle_seed=42,
+        messages_column="messages",
+        user_only=True
     )
+
+    print("Total prompts:", len(texts))
+
+    for text in texts[:1]:
+        print("-" * 80)
+        print(text)
+
     # print(texts[2])
     # return 
     texts = remove_checkpoint_duplicates(

@@ -33,5 +33,9 @@
     "Film" : "Covers: moving images as art and storytelling: filmmaking, film analysis, actors and directors, genres, film history, cinema, and screenwriting.\nExcludes: gaming (Game), music (Music), non-film literature (Literature), and visual art (Painting).",
     "Music" : "Covers: organized sound as art and expression: music theory, artists, production, genres, music industry, performance, and composition.\nExcludes: gaming, film, literature, and visual art (Game, Film, Literature, Painting).",
     "Literature" : "Covers: written and spoken word as art, outside of game- or film-specific writing: books, standalone poetry, authors, literary analysis, publishing, and creative writing.\nExcludes: game narrative writing (Game), screenwriting (Film), music (Music), and visual art (Painting).",
-    "Painting" : "Covers: visual creation and representation: painting, drawing, sculpture, photography, art techniques, art history, visual design, and illustration.\nExcludes: gaming, film, music, and literature (Game, Film, Music, Literature)."
+    "Painting" : "Covers: visual creation and representation: painting, drawing, sculpture, photography, art techniques, art history, visual design, and illustration.\nExcludes: gaming, film, music, and literature (Game, Film, Music, Literature).",
+    "Agriculture": "",
+    "Greetings": "",
+    "Politics": "",
+    "Theology": ""
 }

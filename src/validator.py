@@ -1,7 +1,8 @@
 from config import MODEL, SOURCE_DATASET
 from config import REASONING
 
-VALID_LABELS = {
+
+VALID_LABELS = [
     "Desktop & Mobile & Web Development",
     "Cybersecurity",
     "AI / Machine Learning / Data Science",
@@ -31,15 +32,18 @@ VALID_LABELS = {
     "Criminal Law",
     "Family Law",
     "Corporate Law",
-    "Civil Law" ,
+    "Civil Law",
     "Game",
     "Film",
     "Music",
     "Literature",
     "Painting",
+    "Agriculture",
+    "Greetings",
+    "Politics",
+    "Theology",
     "Not Related",
-}
-
+]
 HIERARCHY = {
     "Programming / Technology": [
         "Desktop & Mobile & Web Development",
@@ -95,6 +99,18 @@ HIERARCHY = {
         "Music",
         "Literature",
         "Painting"
+    ],
+     "Agriculture": [
+        "Agriculture"
+    ],
+     "Greetings": [
+        "Greetings"
+    ],
+     "Politics": [
+        "Politics"
+    ],
+     "Theology": [
+        "Theology"
     ],
     "Not Related": [
         "Not Related"
